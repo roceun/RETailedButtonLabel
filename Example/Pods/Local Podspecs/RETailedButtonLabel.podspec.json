@@ -1,0 +1,22 @@
+{
+  "name": "RETailedButtonLabel",
+  "version": "0.1.0",
+  "summary": "A short description of RETailedButtonLabel.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/roceun/RETailedButtonLabel",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "roceun": "roceun@sk.com"
+  },
+  "source": {
+    "git": "https://github.com/roceun/RETailedButtonLabel.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "RETailedButtonLabel/Classes/**/*"
+}

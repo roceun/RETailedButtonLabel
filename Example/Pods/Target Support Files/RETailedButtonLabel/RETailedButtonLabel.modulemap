@@ -1,0 +1,6 @@
+framework module RETailedButtonLabel {
+  umbrella header "RETailedButtonLabel-umbrella.h"
+
+  export *
+  module * { export * }
+}

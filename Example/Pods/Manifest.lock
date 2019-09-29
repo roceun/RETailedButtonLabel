@@ -1,0 +1,16 @@
+PODS:
+  - RETailedButtonLabel (0.1.0)
+
+DEPENDENCIES:
+  - RETailedButtonLabel (from `../`)
+
+EXTERNAL SOURCES:
+  RETailedButtonLabel:
+    :path: ../
+
+SPEC CHECKSUMS:
+  RETailedButtonLabel: f58101b73f11659b64dcef03a96e0c8ba73ece97
+
+PODFILE CHECKSUM: 853b320cf5af6538090b6a6dffa57bfcf797efe4
+
+COCOAPODS: 1.4.0
