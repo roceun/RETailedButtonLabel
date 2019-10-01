@@ -10,6 +10,7 @@
 #endif
 #endif
 
+#import "RETailedButtonLabel.h"
 
 FOUNDATION_EXPORT double RETailedButtonLabelVersionNumber;
 FOUNDATION_EXPORT const unsigned char RETailedButtonLabelVersionString[];

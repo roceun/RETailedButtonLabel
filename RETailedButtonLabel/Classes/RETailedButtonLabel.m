@@ -79,22 +79,24 @@
 		if (_tailedButton) {
 			[self addSubview:_tailedButton];
 			
+			const CGFloat buttonSize = textHeight + _lineMargin;
+			
 			[lineLabel sizeToFit];
 			CGFloat offsetX = lineLabel.frame.origin.x + lineLabel.frame.size.width + _buttonMargin;
-			CGFloat offsetY = lineLabel.frame.origin.y;
-			if (size.width - offsetX < textHeight) {
+			CGFloat offsetY = lineLabel.frame.origin.y - (_lineMargin / 2);
+			if (size.width - offsetX < buttonSize) {
 				if (_label.numberOfLines == currentLine + 1) {
 					CGRect frame = lineLabel.frame;
-					frame.size.width = size.width - textHeight - _buttonMargin;
+					frame.size.width = size.width - buttonSize - _buttonMargin;
 					lineLabel.frame = frame;
 					
 					offsetX = lineLabel.frame.origin.x + lineLabel.frame.size.width + _buttonMargin;
 				} else {
 					offsetX = 0;
-					offsetY += (textHeight + _lineMargin);
+					offsetY += buttonSize;
 				}
 			}
-			_tailedButton.frame = CGRectMake(offsetX, offsetY, textHeight, textHeight);
+			_tailedButton.frame = CGRectMake(offsetX, offsetY, buttonSize, buttonSize);
 		}
 		
 		size.height = CGRectGetMaxY((_tailedButton ?: lineLabel).frame);

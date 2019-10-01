@@ -7,7 +7,7 @@
 //
 
 #import "REViewController.h"
-#import "../../RETailedButtonLabel/Classes/RETailedButtonLabel.h"
+#import "RETailedButtonLabel.h"
 
 @interface REViewController ()
 
