@@ -1,6 +1,5 @@
 # RETailedButtonLabel
 
-[![CI Status](https://img.shields.io/travis/roceun/RETailedButtonLabel.svg?style=flat)](https://travis-ci.org/roceun/RETailedButtonLabel)
 [![Version](https://img.shields.io/cocoapods/v/RETailedButtonLabel.svg?style=flat)](https://cocoapods.org/pods/RETailedButtonLabel)
 [![License](https://img.shields.io/cocoapods/l/RETailedButtonLabel.svg?style=flat)](https://cocoapods.org/pods/RETailedButtonLabel)
 [![Platform](https://img.shields.io/cocoapods/p/RETailedButtonLabel.svg?style=flat)](https://cocoapods.org/pods/RETailedButtonLabel)

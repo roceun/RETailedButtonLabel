@@ -9,9 +9,9 @@
 #import "RETailedButtonLabel.h"
 
 
-@interface RETailedButtonLabel ()
-
-@property (nonatomic, assign) CGSize maxSize;
+@interface RETailedButtonLabel () {
+	UIView *_contentView;
+}
 
 @end
 
@@ -26,17 +26,17 @@
 - (CGSize)sizeThatFits:(CGSize)size
 {
     [self makeView];
-	return _maxSize;
+	return _contentView.frame.size;
 }
 
 - (CGSize)intrinsicContentSize
 {
-    return _maxSize;
+    return _contentView.frame.size;
 }
 
 - (void)layoutSubviews
 {
-    if (_maxSize.width != self.frame.size.width) {
+    if (_contentView.frame.size.width != self.frame.size.width) {
         [self makeView];
         [self invalidateIntrinsicContentSize];
     }
@@ -46,12 +46,15 @@
 
 - (void)makeView
 {
-	[self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-	
+	[_contentView removeFromSuperview];
+	_contentView = nil;
+
 	if (_label.text.length == 0) {
-		self.maxSize = CGSizeMake(self.frame.size.width, 0);
 		return;
 	}
+	
+	_contentView = [[UIView alloc] init];
+	[self addSubview:_contentView];
 	
 	UILabel *lineLabel = [[UILabel alloc] init];
 	lineLabel.attributedText = _label.attributedText;
@@ -64,7 +67,7 @@
 	NSUInteger currentLine = 0;
 	
 	if (textHeight > 0) {
-		[self addSubview:lineLabel];
+		[_contentView addSubview:lineLabel];
 		
 		if (_label.numberOfLines != 1 && lineLabel.frame.size.width > size.width) {
 			while(1) {
@@ -86,18 +89,18 @@
 				lineLabel.attributedText = [_label.attributedText attributedSubstringFromRange:NSMakeRange(index, _label.attributedText.length - index)];
 				lineLabel.numberOfLines = 1;
 				[lineLabel sizeToFit];
-				[self addSubview:lineLabel];
+				[_contentView addSubview:lineLabel];
 			}
 		}
+		[lineLabel sizeToFit];
 		
 		if (_tailedButton) {
-			[self addSubview:_tailedButton];
+			[_contentView addSubview:_tailedButton];
 			
 			const CGFloat buttonSize = textHeight + _lineMargin;
 			
-			[lineLabel sizeToFit];
 			CGFloat offsetX = lineLabel.frame.origin.x + lineLabel.frame.size.width + _buttonMargin;
-			CGFloat offsetY = lineLabel.frame.origin.y - (_lineMargin / 2);
+			CGFloat offsetY = lineLabel.frame.origin.y + (lineLabel.frame.size.height / 2.f) - (buttonSize / 2.f);
 			if (size.width - offsetX < buttonSize) {
 				if (_label.numberOfLines == currentLine + 1) {
 					CGRect frame = lineLabel.frame;
@@ -113,8 +116,16 @@
 			_tailedButton.frame = CGRectMake(offsetX, offsetY, buttonSize, buttonSize);
 		}
 		
+		if (lineLabel.frame.origin.y == 0) {
+			size.width = CGRectGetMaxX(lineLabel.frame) + CGRectGetWidth(_tailedButton.frame);
+		}
 		size.height = CGRectGetMaxY((_tailedButton ?: lineLabel).frame);
-		self.maxSize = size;
+		
+		CGRect frame = _contentView.frame;
+		frame.size = size;
+		_contentView.frame = frame;
+		
+		[self sendSubviewToBack:_contentView];
 	}
 }
 
