@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'RETailedButtonLabel'
-  s.version          = '0.3.0'
+  s.version          = '0.4.0'
   s.summary          = 'Label and button that follow the tail of the label.'
   s.homepage         = 'https://github.com/roceun/RETailedButtonLabel'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }

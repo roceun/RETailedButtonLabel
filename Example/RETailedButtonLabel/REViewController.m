@@ -25,7 +25,7 @@
 	[self.view addSubview:tailedButtonLabel];
 	
 	UILabel *label = [[UILabel alloc] init];
-	label.text = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789";
+	label.attributedText = [[NSAttributedString alloc] initWithString:@"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789"];
 	label.numberOfLines = 0;
 	tailedButtonLabel.label = label;
 	
@@ -33,7 +33,6 @@
 	button.backgroundColor = [UIColor yellowColor];
 	tailedButtonLabel.tailedButton = button;
 	
-	[tailedButtonLabel makeView];
 	[tailedButtonLabel sizeToFit];
 }
 

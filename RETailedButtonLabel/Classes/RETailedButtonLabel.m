@@ -25,7 +25,21 @@
 
 - (CGSize)sizeThatFits:(CGSize)size
 {
+    [self makeView];
 	return _maxSize;
+}
+
+- (CGSize)intrinsicContentSize
+{
+    return _maxSize;
+}
+
+- (void)layoutSubviews
+{
+    if (_maxSize.width != self.frame.size.width) {
+        [self makeView];
+        [self invalidateIntrinsicContentSize];
+    }
 }
 
 //MARK: - Public methods
@@ -35,7 +49,7 @@
 	[self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
 	
 	if (_label.text.length == 0) {
-		self.maxSize = CGSizeMake(self.bounds.size.width, 0);
+		self.maxSize = CGSizeMake(self.frame.size.width, 0);
 		return;
 	}
 	
@@ -45,7 +59,7 @@
 	[lineLabel sizeToFit];
 	
 	const CGFloat textHeight = lineLabel.frame.size.height;
-	CGSize size = self.bounds.size;
+	CGSize size = self.frame.size;
 	NSUInteger index = 0;
 	NSUInteger currentLine = 0;
 	
@@ -107,7 +121,7 @@
 @end
 
 
-//MARK: - 
+//MARK: -
 
 @implementation UILabel (CutText)
 
@@ -118,19 +132,17 @@
 		return;
 	
 	CGFloat width = CGRectGetWidth(self.frame), textWidth;
-	CGSize maximumLabelSize = CGSizeMake(CGFLOAT_MAX, self.frame.size.height);
 
     NSInteger max = [str length];
-    textWidth = [str boundingRectWithSize:maximumLabelSize
-                                  options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                  context:nil].size.width;
+	textWidth = self.frame.size.width;
     
+	UILabel *label = [[UILabel alloc] init];
     if (width <= textWidth) {
         NSInteger newMax = max * width / textWidth;
         for (max = newMax; max <= [str length]; max++) {
-            textWidth = [[str attributedSubstringFromRange:NSMakeRange(0, max)] boundingRectWithSize:maximumLabelSize
-                                                                                   options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                                                                   context:nil].size.width;
+			label.attributedText = [str attributedSubstringFromRange:NSMakeRange(0, max)];
+			[label sizeToFit];
+			textWidth = label.frame.size.width;
 
             if (width < textWidth) {
                 max--;
@@ -140,9 +152,9 @@
 
         if (newMax > max) {
             do {
-                textWidth = [[str attributedSubstringFromRange:NSMakeRange(0, max)] boundingRectWithSize:maximumLabelSize
-                                                                                       options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                                                                       context:nil].size.width;
+                label.attributedText = [str attributedSubstringFromRange:NSMakeRange(0, max)];
+				[label sizeToFit];
+				textWidth = label.frame.size.width;
             } while (width <= textWidth && max-- >= 0);
         }
     }
